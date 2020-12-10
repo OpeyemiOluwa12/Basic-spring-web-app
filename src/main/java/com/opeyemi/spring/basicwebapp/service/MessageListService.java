@@ -1,4 +1,4 @@
-package com.opeyemi.spring.basicwebapp.controller;
+package com.opeyemi.spring.basicwebapp.service;
 
 import org.springframework.stereotype.Service;
 
