@@ -25,8 +25,8 @@ public class ChatController {
     }
 
     @GetMapping
-    public String showChats(ChatForm chatForm, Model model) {
-        model.addAttribute("chatMessages", messageService.getChatMessageList());
+    public String showChats(@ModelAttribute("chatForm") ChatForm chatForm, Model model) {
+        model.addAttribute("chatMessages", messageService.getMessagesList());
         return "chat";
     }
 
@@ -34,7 +34,7 @@ public class ChatController {
     public String sendChat(ChatForm chatForm, Model model) {
 
         messageService.addMessage(chatForm);
-        model.addAttribute("chatMessages", messageService.getChatMessageList());
+        model.addAttribute("chatMessages", messageService.getMessagesList());
         chatForm.setMessage("");
         return "chat";
     }
