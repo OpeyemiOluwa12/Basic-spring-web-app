@@ -3,6 +3,7 @@ package com.opeyemi.spring.basicwebapp.controller;
 import com.opeyemi.spring.basicwebapp.model.ChatForm;
 import com.opeyemi.spring.basicwebapp.model.MessageType;
 import com.opeyemi.spring.basicwebapp.service.MessageService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,8 @@ public class ChatController {
     }
 
     @PostMapping
-    public String sendChat(ChatForm chatForm, Model model) {
-
+    public String sendChat(Authentication authentication, ChatForm chatForm, Model model) {
+        chatForm.setUsername(authentication.getName());
         messageService.addMessage(chatForm);
         model.addAttribute("chatMessages", messageService.getMessagesList());
         chatForm.setMessage("");

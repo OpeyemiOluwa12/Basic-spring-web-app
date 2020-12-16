@@ -46,9 +46,7 @@ public class MessageService {
                 messages.setMessageText(chatForm.getMessage().toLowerCase());
                 break;
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        messages.setUsername(currentUsername);
+        messages.setUsername(chatForm.getUsername());
         messagesMapper.insert(messages);
     }
 
