@@ -34,6 +34,13 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -50,8 +57,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot</artifactId>
-			<version>2.1.4</version>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.1.2</version>
 		</dependency>
 	</dependencies>
 

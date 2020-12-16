@@ -1,8 +1,11 @@
 package com.opeyemi.spring.basicwebapp.service;
 
+import com.opeyemi.spring.basicwebapp.mapper.MessagesMapper;
 import com.opeyemi.spring.basicwebapp.model.ChatForm;
-import com.opeyemi.spring.basicwebapp.model.ChatMessage;
+import com.opeyemi.spring.basicwebapp.model.Messages;
 import com.opeyemi.spring.basicwebapp.model.MessageType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -12,43 +15,44 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    private List<ChatMessage> chatMessageList;
+    private List<Messages> messagesList;
 
-    public MessageService() {
+    private final MessagesMapper messagesMapper;
 
+    public MessageService(MessagesMapper messagesMapper) {
+
+        this.messagesMapper = messagesMapper;
     }
 
     @PostConstruct
     public void postConstruct() {
-        this.chatMessageList = new ArrayList<>();
+        this.messagesList = new ArrayList<>();
     }
 
-    public List<ChatMessage> getChatMessageList() {
-        return chatMessageList;
-    }
-
-    public void setChatMessageList(List<ChatMessage> chatMessageList) {
-        this.chatMessageList = chatMessageList;
+    public List<Messages> getMessagesList() {
+        return messagesMapper.getAllMessages();
     }
 
     public void addMessage(ChatForm chatForm) {
-        ChatMessage chatMessage = new ChatMessage();
+        Messages messages = new Messages();
         switch (MessageType.messageType(chatForm.getMessageType())) {
             case SAY:
-                chatMessage.setMessage(chatForm.getMessage());
+                messages.setMessageText(chatForm.getMessage());
                 break;
             case SHOUT:
-                chatMessage.setMessage(chatForm.getMessage().toUpperCase());
+                messages.setMessageText(chatForm.getMessage().toUpperCase());
                 break;
             case WHISPER:
-                chatMessage.setMessage(chatForm.getMessage().toLowerCase());
+                messages.setMessageText(chatForm.getMessage().toLowerCase());
                 break;
         }
-        chatMessage.setUsername(chatForm.getUsername());
-        chatMessageList.add(chatMessage);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        messages.setUsername(currentUsername);
+        messagesMapper.insert(messages);
     }
 
     public void clearMessage() {
-        chatMessageList.clear();
+        messagesList.clear();
     }
 }
