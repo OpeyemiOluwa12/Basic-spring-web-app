@@ -18,12 +18,12 @@
                 th:text="${messageType}">Say
         </option>
     </select>
-    <input type="submit">
+    <input id="submitButton" type="submit">
 </form>
 
 <div th:each="messages: ${chatMessages}">
-    <span th:text="${messages.username}">Username:</span>:
-    <span th:text="${messages.messageText}">Message</span>
+    <span class="chatMessageUsername" th:text="${messages.username}">Username:</span>:
+    <span class="chatMessageText" th:text="${messages.messageText}">Message</span>
 </div>
 </body>
 </html>
